@@ -27,12 +27,12 @@ define( 'EXT_VIEW'          , '_view.php' );
 define( 'EXT_HELPER'		, '_helper.php' );
 
 // Variables de session
-define( 'SESSION'           , 'cb' );
+define( 'SESSION'           , 'furrows' );
 
 // Base de données
 define( 'HOST'              , '127.0.0.1' );
 define( 'USER'              , 'root' );
-define( 'PASS'              , '' );
-define( 'BASE'              , 'cb' );
+define( 'PASS'              , 'root' );
+define( 'BASE'              , 'furrows' );
 
 ?>
