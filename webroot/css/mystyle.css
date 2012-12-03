@@ -1,0 +1,10 @@
+p.text{
+	white-space: nowrap;
+	width: 100%;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+#controls{
+	margin: 10px 0px;
+}
