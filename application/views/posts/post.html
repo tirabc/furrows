@@ -1,0 +1,23 @@
+<div>
+	<div class="post">
+		<h2>{{title}}</h2>
+		<p>{{body}}</p>
+	</div>
+	<hr/>
+	<div id="comments">
+		<!--comments:START-->
+		<div class="comment well">
+			<h5>{{comments:author}}</h5>
+			<p>{{comments:body}}</p>
+		</div>
+		<!--comments:END-->
+	</div>
+	<div>
+		<form>
+			<input type="hidden" id="post_id" name="post_id" value="{{id}}"/>
+			<p><input type="text" class="input-small" name="author" id="author" placeholder="Type your name"/></p>
+			<p><textarea name="body" id="body" placeholder="Type your comment here"></textarea></p>
+			<p><button class="btn" id="comment">Comment</button></p>
+		</form>
+	</div>
+</div>
