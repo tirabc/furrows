@@ -13,7 +13,7 @@ define( 'DIR_CONTROLLERS'	, DIR_APPLICATION.'controllers/' );
 define( 'DIR_VIEWS'			, DIR_APPLICATION.'views/' );
 
 // Default values
-define( 'DEFAULT_CONTROLLER', 'Blog' );
+define( 'DEFAULT_CONTROLLER', 'Posts' );
 define( 'DEFAULT_ACTION'    , 'view_posts' );
 
 // Default names

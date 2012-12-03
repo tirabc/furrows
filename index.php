@@ -13,6 +13,8 @@ try
 	require_once( DIR_FRAMEWORK.'Controller.php' );
 	require_once( DIR_FRAMEWORK.'Model.php' );
 	require_once( DIR_FRAMEWORK.'View.php' );
+	require_once( DIR_FRAMEWORK.'Json.php' );
+	require_once( DIR_FRAMEWORK.'Html.php' );
 	
 	// sessions
 	session_start();

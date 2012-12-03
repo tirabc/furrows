@@ -102,7 +102,7 @@ class Front_controller
 			// On instancie la classe appelée
 			$stdclass = $rc->newInstance();
 
-			// Est-ce que la méthode appelée existe ? --> Exception si non !!
+			// Est-ce que la méthode appelée existe ?
 			if( $rc->hasMethod( $this->_action ) )
 			{
 

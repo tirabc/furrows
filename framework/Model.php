@@ -51,6 +51,22 @@ class Model
 	}
 	
 	/**
+     * find_all_by($column,$value)
+     * @note : récupère tous les enregistrements respectant la condition passée en paramètre
+     * @return : array Object StdClass
+     */	
+	public function find_all_by($column,$value)
+	{
+		global $pdo;
+
+		$sql = 'SELECT * FROM ' . $this->__table . ' WHERE ' . $column . '=' . $value ;
+		$query = $pdo->query ( $sql );
+		$array = $query->fetchAll(PDO::FETCH_CLASS);
+		
+		return $array;
+	}
+	
+	/**
      * add()
      * @note : Permet d'ajouter un enregistrement dans la table
      * @return : void
