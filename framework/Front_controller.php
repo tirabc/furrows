@@ -3,7 +3,7 @@
 /**
  * Front_controller
  *
- * @author christian
+ * @author christian barras
  */
 class Front_controller
 {
@@ -120,7 +120,8 @@ class Front_controller
 					}
 					elseif (empty( $_REQUEST[ $parameter->getName() ] ) && $parameter->isDefaultValueAvailable() )
 					{
-						continue;
+						// On alimente le tableau des paramètres
+						$args[ $parameter->getName() ] = $parameter->getDefaultValue();
 					}
 					else
 					{
@@ -133,6 +134,10 @@ class Front_controller
 				// On appelle la méthode
 				$rm->invokeArgs( $stdclass , $args );
 
+			}
+			else
+			{
+				throw new Exception('Cette m&eacute;thode n\'existe pas.');
 			}
 
 		}

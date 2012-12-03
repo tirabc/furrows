@@ -13,8 +13,8 @@ define( 'DIR_CONTROLLERS'	, DIR_APPLICATION.'controllers/' );
 define( 'DIR_VIEWS'			, DIR_APPLICATION.'views/' );
 
 // Default values
-define( 'DEFAULT_CONTROLLER', 'Editor' );
-define( 'DEFAULT_ACTION'    , 'init' );
+define( 'DEFAULT_CONTROLLER', 'Blog' );
+define( 'DEFAULT_ACTION'    , 'view_posts' );
 
 // Default names
 define( 'NAME_CONTROLLER'   , 'c' );
@@ -30,7 +30,7 @@ define( 'EXT_HELPER'		, '_helper.php' );
 define( 'SESSION'           , 'furrows' );
 
 // Base de données
-define( 'HOST'              , '127.0.0.1' );
+define( 'HOST'              , 'localhost' );
 define( 'USER'              , 'root' );
 define( 'PASS'              , 'root' );
 define( 'BASE'              , 'furrows' );

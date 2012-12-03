@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * Controller
+ *
+ * @author christian barras
+ */
 class Controller
 {
 	protected $models = array();
@@ -12,7 +17,7 @@ class Controller
      */
     public function __construct()
     {
-        $this->load_models();
+    	$this->load_models();
         $this->load_helpers();
     }
 
@@ -25,7 +30,7 @@ class Controller
     {
         foreach($this->models as $model)
 		{
-            require_once(DIR_MODELS.$model.EXT_MODEL);
+			require_once(DIR_MODELS.$model.EXT_MODEL);
 		}
     }
     
@@ -47,6 +52,7 @@ class Controller
      */
     public function load_view($view, $data=null)
     {
+    	// TODO: check if $data is an array
 		if(isset($data))
 		{
 			foreach($data as $key => $value)
