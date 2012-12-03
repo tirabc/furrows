@@ -64,7 +64,5 @@ class Controller
 		require_once(DIR_VIEWS.$view.EXT_VIEW);
 	}
 	
-
-
 }
 ?>
