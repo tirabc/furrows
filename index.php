@@ -31,9 +31,11 @@ try
 }
 catch( Exception $e )
 {
-	
-    echo $e->getMessage();
-    
+	$view = new View();
+	$view->__set('status',500);
+	$view->__set('message',$e->getMessage());
+	$view->__set('body',$e->getMessage());
+	$view->render();
 }
 
 ?>

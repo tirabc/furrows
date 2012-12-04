@@ -2,7 +2,7 @@
 
 class Json extends View
 {
-	protected $status;
+	protected $status; // hérité de View
 	protected $body; // hérité de View
 	protected $content_type;
 	

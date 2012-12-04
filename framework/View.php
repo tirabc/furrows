@@ -8,6 +8,8 @@
 class View
 {
     protected $body;
+    protected $status = '200';
+    protected $message = 'Ok';
 
     /*
      * render()
@@ -16,6 +18,8 @@ class View
      */
     public function render()
     {
+    	$status_header = 'HTTP/1.1 ' . $this->status . ' ' . $this->message;  
+    	header($status_header);
         echo $this->body;
     }
 

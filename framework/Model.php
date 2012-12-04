@@ -144,7 +144,7 @@ class Model
 		
 		if( !$query )
 		{
-			throw new Exception( 'Erreur delete' );
+			throw new Exception( 'Erreur delete : ' . $sql );
 		}
 	}
 	
