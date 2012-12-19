@@ -67,6 +67,64 @@ class Model
 	}
 	
 	/**
+     * find($quantity, $column, $value, $ranking)
+     * @note : Permet de récuperer les 'n' derniers enregistrement d'une table respectant la condition passée en paramètre et l'ordonancement.
+     * @return : void
+     */
+
+	public function find($quantity, $column, $value, $ranking)
+	{
+
+		global $pdo;
+	
+		// Where
+		if ( $column == null || $value == null )
+		{
+			$where = '';
+		}
+		else
+		{
+			$where = 'WHERE ' . $column . '=' . $pdo->quote ( $value );
+		}
+		
+		// Order
+		if ( $ranking == null )
+		{
+			$order = '';
+		}
+		elseif ( $ranking == 'ASC' )
+		{
+			$order = 'ORDER BY ID '.$ranking;
+		}
+		elseif ( $ranking == 'DESC' )
+		{
+			$order = 'ORDER BY ID '.$ranking;
+		}
+
+		function IsInt($caracters) {
+		   return(is_numeric($caracters) ? intval(0+$caracters) == $caracters : false);
+		}
+	
+		// Limit
+		if ( $quantity == null || IsInt($quantity) == false )
+		{
+			$limit = '';
+		}
+		elseif ( IsInt($quantity) == true )
+		{
+			$limit = ' LIMIT 0, '.$quantity;			
+		}
+
+		$sql = 'SELECT * FROM ' . $this->__table .' '.$where.' '.$order.' '.$limit.'';		
+				
+		$query = $pdo->query ( $sql );
+		//if( DEBUG && !$query ) throw new Exception ( $sql );
+		$array = $query->fetchAll(PDO::FETCH_CLASS);
+		
+		return $array;
+	}
+	
+	/**
      * add()
      * @note : Permet d'ajouter un enregistrement dans la table
      * @return : void
