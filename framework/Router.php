@@ -5,12 +5,13 @@
  *
  * @author christian barras
  */
-class Front_controller
+class Router
 {
 
     private $_pdo;
     private $_controller;
     private $_action;
+    private $_args;
 
     /*
      * get_controller()
@@ -74,6 +75,67 @@ class Front_controller
         
 		$this->_pdo = new PDO( "mysql:host=" . $host . ";dbname=" . $base , $user, $pass );
     }
+    
+    /*
+     * dispatch()
+     * @note : permet de définir le controleur, l'action et les parametres de la requete
+     * @prerequisite: htaccess + url/myresource/myid
+     * @return : void
+     */
+    public function dispatch()
+    {
+        $data = explode('/',$_REQUEST['data']);
+        
+        // vars
+        $_verb = strtolower( $_SERVER['REQUEST_METHOD'] );
+        
+        // Ressource
+        if(!empty($data[0]))
+        	$this->_controller = $data[0];
+        
+        // Action
+        
+        // CRUD
+        switch($_verb){
+            case 'put':
+                $this->_action = 'update';
+            break;
+            case 'delete':
+                $this->_action = 'delete';
+            break;
+            case 'get':
+                $this->_action = 'retrieve';
+            break;
+            case 'post':
+                $this->_action = 'create';
+            break;
+        }
+        
+        // Autre
+        if( !empty( $_REQUEST['_action'] ) ){
+        	$this->_action = $_REQUEST['_action'];
+        }
+        
+		// Parametres
+		$_args = $_REQUEST;
+		if(!empty($data[1]))
+			$_REQUEST['id'] = $data[1];
+		$this->_args = $_args;
+		        
+    }
+
+    public function dispatch_route()
+    {
+        $data = explode( '/' , $_REQUEST['data'] );
+        $arr = array_reverse($data);
+        $this->_controller = array_pop($arr);
+        $this->_action = array_pop($arr);
+        foreach ($arr as $cell) {
+            $params = explode(':',$cell);
+            $_REQUEST[$params[0]] = $params[1];
+        }
+        $this->_args = $_REQUEST;
+    }
 
     /*
      * route()
@@ -89,7 +151,8 @@ class Front_controller
         $this->_controller	= !empty( $_GET[NAME_CONTROLLER] )	? $_GET[NAME_CONTROLLER]: DEFAULT_CONTROLLER;
 		$this->_action		= !empty( $_GET[NAME_ACTION] )      ? $_GET[NAME_ACTION]    : DEFAULT_ACTION;
 
-		
+		$this->dispatch_route();
+
 		if( is_file( DIR_CONTROLLERS.$this->_controller.EXT_CONTROLLER ) )
 		{
 			require_once( DIR_CONTROLLERS.$this->_controller.EXT_CONTROLLER );
@@ -119,7 +182,7 @@ class Front_controller
 						throw new Exception( 'Manque le param&egrave;tre : '.$parameter->getName() );
 					}
 					elseif (empty( $_REQUEST[ $parameter->getName() ] ) && $parameter->isDefaultValueAvailable() )
-					{
+					{		
 						// On alimente le tableau des paramètres
 						$args[ $parameter->getName() ] = $parameter->getDefaultValue();
 					}

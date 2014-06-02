@@ -59,7 +59,7 @@ class Model
 	{
 		global $pdo;
 
-		$sql = 'SELECT * FROM ' . $this->__table . ' WHERE ' . $column . '=' . $value ;
+		$sql = 'SELECT * FROM ' . $this->__table . ' WHERE ' . $column . '=' . $pdo->quote( $value );
 		$query = $pdo->query ( $sql );
 		$array = $query->fetchAll(PDO::FETCH_CLASS);
 		
@@ -148,7 +148,7 @@ class Model
 		
 		$sql = 'INSERT INTO ' . $this->__table . ' (' . $statement_columns . ') ';
 		$sql .= 'VALUES (' . $statement_values . ')';
-		
+
 		$query = $pdo->query ( $sql );
 		
 		if( !$query )

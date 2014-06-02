@@ -19,6 +19,8 @@ class Controller
     {
     	$this->load_models();
         $this->load_helpers();
+        // sessions
+        session_start();
     }
 
     /*

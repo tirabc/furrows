@@ -1,0 +1,24 @@
+body{
+	padding: 1em;
+	font: 14px Helvetica, sans-serif;
+}
+
+h1{
+	color: #000;
+}
+
+h2{
+	color: #86ABBF;
+}
+
+span{
+	color: #CCC;
+}
+
+p{
+	color: #808080;
+}
+
+.post{
+	border-top: solid 1px #EEE;
+}

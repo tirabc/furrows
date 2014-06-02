@@ -1,6 +1,6 @@
 <?php
 
-class Json extends View
+class Json extends View implements iRenderView
 {
 	protected $status; // hérité de View
 	protected $body; // hérité de View
