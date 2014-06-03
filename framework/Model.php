@@ -2,8 +2,8 @@
 
 /**
  * Model
- *
- * @author christian barras
+ *  
+ * @author christian barras <tirabc@gmail.com>
  */
 class Model
 {
@@ -16,20 +16,17 @@ class Model
 	/**
      * find_all()
      * @note : récupère tous les enregistrements de la table
-     * @return : array of User objects
+     * @return : array Object StdClass
      */
+
     public function find_all()
     {
 		global $pdo;
 
 		$sql = 'SELECT * FROM ' . $this->__table;
 		$query = $pdo->query ( $sql );
-		$array = $query->fetchAll();
-		/*$array = array();
-		while ( $object = $query->fetchObject ( $this->__name ) ) 
-		{
-			array_push ( $array , $object );
-		}*/
+		$array = $query->fetchAll( PDO::FETCH_CLASS );
+
 		return $array;
     }
     
@@ -39,7 +36,7 @@ class Model
      * @return : User object
      */	
 
-	public function find_by_id($id)
+	public function find_by_id( $id )
 	{
 		global $pdo;
 		
@@ -55,71 +52,14 @@ class Model
      * @note : récupère tous les enregistrements respectant la condition passée en paramètre
      * @return : array Object StdClass
      */	
-	public function find_all_by($column,$value)
+
+	public function find_all_by( $column , $value )
 	{
 		global $pdo;
 
 		$sql = 'SELECT * FROM ' . $this->__table . ' WHERE ' . $column . '=' . $pdo->quote( $value );
 		$query = $pdo->query ( $sql );
-		$array = $query->fetchAll(PDO::FETCH_CLASS);
-		
-		return $array;
-	}
-	
-	/**
-     * find($quantity, $column, $value, $ranking)
-     * @note : Permet de récuperer les 'n' derniers enregistrement d'une table respectant la condition passée en paramètre et l'ordonancement.
-     * @return : void
-     */
-
-	public function find($quantity, $column, $value, $ranking)
-	{
-
-		global $pdo;
-	
-		// Where
-		if ( $column == null || $value == null )
-		{
-			$where = '';
-		}
-		else
-		{
-			$where = 'WHERE ' . $column . '=' . $pdo->quote ( $value );
-		}
-		
-		// Order
-		if ( $ranking == null )
-		{
-			$order = '';
-		}
-		elseif ( $ranking == 'ASC' )
-		{
-			$order = 'ORDER BY ID '.$ranking;
-		}
-		elseif ( $ranking == 'DESC' )
-		{
-			$order = 'ORDER BY ID '.$ranking;
-		}
-
-		function IsInt($caracters) {
-		   return(is_numeric($caracters) ? intval(0+$caracters) == $caracters : false);
-		}
-	
-		// Limit
-		if ( $quantity == null || IsInt($quantity) == false )
-		{
-			$limit = '';
-		}
-		elseif ( IsInt($quantity) == true )
-		{
-			$limit = ' LIMIT 0, '.$quantity;			
-		}
-
-		$sql = 'SELECT * FROM ' . $this->__table .' '.$where.' '.$order.' '.$limit.'';		
-				
-		$query = $pdo->query ( $sql );
-		//if( DEBUG && !$query ) throw new Exception ( $sql );
-		$array = $query->fetchAll(PDO::FETCH_CLASS);
+		$array = $query->fetchAll( PDO::FETCH_CLASS );
 		
 		return $array;
 	}
@@ -137,7 +77,8 @@ class Model
 		$values = array();
 		$columns = array();
 		
-		foreach ( $this as $column => $value ){
+		foreach ( $this as $column => $value )
+		{
 			if ( strpos ( $column , '__' ) !== false || $column === 'id' ) continue;
 			$values[] = $pdo->quote ( $value );
 			$columns[] = $column;
@@ -158,19 +99,20 @@ class Model
 	}
 
 	/**
-     * edit($id)
+     * edit( $id )
      * @note : Permet de modifier l'enregistrement identifié par $id
      * @return : void
      */
      
-	public function edit($id)
+	public function edit( $id )
 	{
 		global $pdo;
 		
 		$this->id = $id;
 		$properties = array();
 		
-		foreach ( $this as $column => $value ){
+		foreach ( $this as $column => $value )
+		{
 			if ( strpos ( $column , '__' ) !== false ) continue;
 			$properties[ $column ] = $column . '=' . $pdo->quote ( $value );
 		}
@@ -226,6 +168,26 @@ class Model
 	{
 		return $this->$att;
 	}
+
+	/**
+     * setAttributes( $mixed )
+ 	 * @note : Permet d'initialiser un ensemble d'attributs en une seule ligne
+     * @param $mixed could be a stdClass or an array
+     * @return void
+     */
+    public function setAttributes( $mixed )
+    {
+        if( !is_object( $mixed ) && !is_array( $mixed ) )
+        {
+            throw new Exception( "Not an object or an array" );
+        }
+        
+        foreach( $mixed as $key => $value )
+        {
+            $this->{$key} = $value;
+        }
+        
+    }
 
 }
 ?>
