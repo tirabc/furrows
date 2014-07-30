@@ -34,9 +34,9 @@ define( 'SESSION'           , 'furrowsdemo' );
 define( 'HOST'              , 'localhost' );
 define( 'USER'              , 'root' );
 define( 'PASS'              , 'root' );
-define( 'BASE'              , 'furrowsdemo' );
+define( 'BASE'              , 'loremipsum' );
 
 // Chemin
-define( 'ARRAY_BASE_PATH'   , 'http://localhost:8888/sideprojects/furrows/' );
+define( 'ARRAY_BASE_PATH'   , 'http://localhost:8888/tuts/furrows-restful/furrows/' );
 
 ?>

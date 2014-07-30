@@ -78,47 +78,54 @@ class Router
     
     /*
      * dispatch()
-     * @note : permet de définir le controleur, l'action et les parametres de la requete
+     * @note : RESTFUL ! - permet de définir le controleur, l'action et les parametres de la requete
      * @prerequisite: htaccess + url/myresource/myid
      * @return : void
      */
     public function dispatch()
     {
         $data = explode('/',$_REQUEST['data']);
+        unset( $_REQUEST['data'] );
         
         // vars
         $_verb = strtolower( $_SERVER['REQUEST_METHOD'] );
         
         // Ressource
-        if(!empty($data[0]))
-        	$this->_controller = $data[0];
+        if( empty( $data[0] ) )
+        {
+            throw new Exception( 'no controller' );
+        }
+        
+        $this->_controller = ucfirst( array_pop( array_reverse( $data ) ) );
         
         // Action
         
         // CRUD
-        switch($_verb){
+        switch( $_verb ){
             case 'put':
                 $this->_action = 'update';
             break;
             case 'delete':
                 $this->_action = 'delete';
             break;
-            case 'get':
-                $this->_action = 'retrieve';
-            break;
             case 'post':
                 $this->_action = 'create';
             break;
+            default:
+            case 'get':
+                $this->_action = 'retrieve';
+            break;
         }
-        
+
         // Autre
         if( !empty( $_REQUEST['_action'] ) ){
         	$this->_action = $_REQUEST['_action'];
+            unset($_REQUEST['_action']);
         }
         
 		// Parametres
 		$_args = $_REQUEST;
-		if(!empty($data[1]))
+		if( !empty( $data[1] ) )
 			$_REQUEST['id'] = $data[1];
 		$this->_args = $_args;
 		        
@@ -151,7 +158,8 @@ class Router
         $this->_controller	= !empty( $_GET[NAME_CONTROLLER] )	? $_GET[NAME_CONTROLLER]: DEFAULT_CONTROLLER;
 		$this->_action		= !empty( $_GET[NAME_ACTION] )      ? $_GET[NAME_ACTION]    : DEFAULT_ACTION;
 
-		$this->dispatch_route();
+		//$this->dispatch_route();
+        $this->dispatch();
 
 		if( is_file( DIR_CONTROLLERS.$this->_controller.EXT_CONTROLLER ) )
 		{

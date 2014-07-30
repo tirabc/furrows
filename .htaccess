@@ -4,4 +4,4 @@ RewriteBase /
 RewriteCond %{REQUEST_URI} !(\.tpl|\.xsl|\.css|\.js|\.png|\.jpg|\.gif|robots\.txt)$ [NC]
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule ^(.*)$ sideprojects/furrows/index.php?data=$1 [L]
+RewriteRule ^(.*)$ tuts/furrows-restful/furrows/index.php?data=$1 [L]
