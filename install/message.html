@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>Serious Talk - Installation</title>
+	<link rel="stylesheet" href="">
+	<style>
+		body{
+			font-family: sans-serif;
+		}
+		h1{
+			text-align: center;
+			padding-top: 3em;
+			color: #555;
+		}
+		h2{
+			text-align: center;
+			padding-top: 1em;
+			margin-bottom: 2em;
+			color: #CCC;
+			text-shadow: 0px 0px 1px rgba(0,0,0,0.1);
+		}
+		div{
+			width: 50%;
+			margin: 0 auto;
+			padding: 2em;
+		}
+		.error{
+			box-shadow: inset 0px 0px 8px 0px rgba(0,0,0,1);
+			color: #52ED44;
+			background: #303030;
+		}
+		.note{
+			box-shadow: inset 0px 0px 8px 0px rgba(0,0,0,0.2);
+			color: #DEB887;
+			background: #FFEFD5;
+		}
+		.error-form{
+			color: #C4160D;
+			margin-bottom: 1em;
+		}
+		.form{
+			box-shadow: inset 0px 0px 8px 0px rgba(0,0,0,0.2);
+			color: #888;
+			background: #FEFEFE;
+			font-size: 1.2em;
+		}
+		.form p.radio{
+			width: 40%;
+			display: inline-block;
+			text-align: center;
+		}
+		.form input[type="text"],.form input[type="password"]{
+			font-size: 1.2em;
+			display: block;
+			width: 80%;
+			margin: 1em auto;
+			padding: 0.5em;
+			background: #FFF;
+			border: solid 1px #CCC;
+		}
+		.form input[type="submit"]{
+			display: block;
+			margin: 1em auto;
+			padding: 1em 2em;
+			font-size: 1.2em;
+			font-weight: bolder;
+			border-radius: 2px;
+			border: none;
+			background: #0467E0;
+			color: #FEFEFE;
+		}
+		.form input[type="submit"]:hover{
+			background: #043066;
+			cursor: pointer;
+		}
+		.form input[type="text"]:focus,.form input[type="password"]:focus{
+			border: solid 1px #0467E0;
+		}
+		a{
+			display: inline-block;
+			padding: 1em;
+			border-radius: 2px;
+			background: #CCC;
+			color: #000;
+			text-decoration: none;
+		}
+		a:hover{
+			background: #AAA;
+		}
+	</style>
+</head>
+<body>
+	
+	<h1>{{title}}</h1>
+	<h2>{{second}}</h2>
+
+	<div class="error-form">{{error}}</div>
+
+	<div class="{{class}}">
+		{{body}}
+	</div>
+
+	<div>
+		<a href='./'>&larr;&nbsp;Restart installation</a>
+	</div>
+
+</body>
+</html>

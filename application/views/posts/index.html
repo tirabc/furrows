@@ -1,0 +1,17 @@
+{% include "@common/header.html" %}
+
+<div id="posts">
+
+  {% for post in posts %}
+
+  <div class="post">
+    <h2>{{post.title}}</h2>
+    <span>{{post.register_date}}</span>
+    <p>{{post.content}}</p>
+  </div>
+
+  {% endfor %}
+
+</div>
+
+{% include "@common/footer.html" %}
