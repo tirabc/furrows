@@ -14,7 +14,8 @@ define( 'DIR_CONTROLLERS'	, DIR_APPLICATION.'controllers/' );
 define( 'DIR_VIEWS'			, DIR_APPLICATION.'views/' );
 
 // Default values
-define( 'DEFAULT_CONTROLLER', 'pages' );
+define( 'DEFAULT_CONTROLLER', 'posts' );
+
 define( 'DEFAULT_ACTION'    , 'index' );
 
 // Default names
@@ -34,9 +35,13 @@ define( 'SESSION'           , 'furrowsdemo' );
 define( 'HOST'              , 'localhost' );
 define( 'USER'              , 'root' );
 define( 'PASS'              , 'root' );
+
 define( 'BASE'              , 'furrowsdemo' );
 
 // Chemin
 define( 'ARRAY_BASE_PATH'   , 'http://localhost:8888/furrows/' );
+
+
+
 
 ?>

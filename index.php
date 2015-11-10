@@ -9,11 +9,15 @@ try
 {
 	// includes
 	require_once( './config.php' );
+
 	require_once( DIR_FRAMEWORK.'helpers/Dispatch_helper.php' );
+
+
 	require_once( DIR_FRAMEWORK.'Router.php' );
 	require_once( DIR_FRAMEWORK.'Controller.php' );
 	require_once( DIR_FRAMEWORK.'Model.php' );
 	require_once( DIR_FRAMEWORK.'View.php' );
+
 	require_once( DIR_FRAMEWORK.'Json.php' );
 	//require_once( DIR_FRAMEWORK.'Mustache.php' );
 	//require_once( DIR_FRAMEWORK.'libs/Mustache/Autoloader.php' );
@@ -27,6 +31,7 @@ try
 	$loader->addPath( DIR_VIEWS."posts/" , "posts" );
 	$loader->addPath( DIR_VIEWS."common/" , "common" );
 
+
 	// init
 	$router = new Router();
 	
@@ -34,6 +39,7 @@ try
 	$pdo = $router->get_pdo();
 	
 	// load mustache
+
 	//Mustache_Autoloader::register();
 
 	// add dispatch lib here
@@ -59,6 +65,7 @@ try
 
 	# args you pass to dispatch() gets forwarded
 	dispatch();
+
 
 
 }

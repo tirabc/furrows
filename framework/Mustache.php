@@ -1,5 +1,6 @@
 <?php
 
+
 class Mustache extends View
 {
 	public $engine;

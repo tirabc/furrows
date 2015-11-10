@@ -18,8 +18,11 @@ class View
      */
     public function render()
     {
-    	$status_header = 'HTTP/1.1 ' . $this->status . ' ' . $this->message;  
+
+    	$status_header = 'HTTP/1.1 ' . $this->status . ' ' . strtoupper( $this->message );  
     	header($status_header);
+        header( 'Content-Type: ' . $this->content_type );
+
         echo $this->body;
     }
 
