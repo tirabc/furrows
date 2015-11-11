@@ -3,18 +3,21 @@
 class Users_controller extends Controller
 {
     protected $models = array( 'User' );
+
+    public function before()
+    {
+        global $loader;
+        $loader->addPath( DIR_VIEWS."users/" , "users" );
+    }
   
     public function index()
     {
 
-        $user_model = new User();
-        $users = $user_model->find_all();
+        global $twig;
+        $data = array();
 
-        $data["base_url"] = ARRAY_BASE_PATH;
-        $data["users"] = $users;
-
-        $view = new Mustache( 'users/index' , $data );
-        $view->render();
+        $template = $twig->loadTemplate( "@users/index.html" );
+        echo $template->render($data);
     }
 
 }

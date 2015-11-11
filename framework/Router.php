@@ -76,89 +76,6 @@ class Router
         
 		$this->_pdo = new PDO( "mysql:host=" . $host . ";dbname=" . $base , $user, $pass );
     }
-    
-    /*
-     * dispatch()
-     * @prerequisite: htaccess + url/myresource/myid
-     * @return : void
-     */
-    public function dispatch()
-    {
-        $data = explode('/',$_REQUEST['data']);
-
-
-        unset( $_REQUEST['data'] );
-
-        
-        // vars
-        $_verb = strtolower( $_SERVER['REQUEST_METHOD'] );
-        
-        // Ressource
-
-        if(!empty($data[0]))
-        	$this->_controller = $data[0];
-
-        if( empty( $data[0] ) )
-        {
-            throw new Exception( 'no controller' );
-        }
-        
-        $this->_controller = ucfirst( array_pop( array_reverse( $data ) ) );
-
-        
-        // Action
-        
-        // CRUD
-
-        switch( $_verb ){
-
-            case 'put':
-                $this->_action = 'update';
-            break;
-            case 'delete':
-                $this->_action = 'delete';
-            break;
-
-            case 'post':
-                $this->_action = 'create';
-            break;
-            default:
-            case 'get':
-                $this->_action = 'retrieve';
-            break;
-        }
-
-        // Autre
-        if( !empty( $_REQUEST['_action'] ) ){
-        	$this->_action = $_REQUEST['_action'];
-            unset($_REQUEST['_action']);
-
-        }
-        
-		// Parametres
-		$_args = $_REQUEST;
-
-		if( !empty( $data[1] ) )
-
-			$_REQUEST['id'] = $data[1];
-		$this->_args = $_args;
-		        
-    }
-
-    public function dispatch_route()
-    {
-        $data = explode( '/' , $_REQUEST['data'] );
-
-        $arr = array_reverse($data);
-        $this->_controller = array_pop($arr);
-        $this->_action = array_pop($arr);
-        foreach ($arr as $cell) {
-            $params = explode(':',$cell);
-
-            $_REQUEST[$params[0]] = $params[1];
-        }
-        $this->_args = $_REQUEST;
-    }
 
     /*
      * route()
@@ -168,69 +85,96 @@ class Router
     public function route()
     {
 
-        $stdclass = '';     // Classe appelée
-        $args = array();    // Arguments passés
+        try
+        {
+
+            $stdclass = '';     // Classe appelée
+            $args = array();    // Arguments passés
+
+            $this->_controller	= !empty( $_GET[NAME_CONTROLLER] )	? $_GET[NAME_CONTROLLER]: DEFAULT_CONTROLLER;
+    		$this->_action		= !empty( $_GET[NAME_ACTION] )      ? $_GET[NAME_ACTION]    : DEFAULT_ACTION;
+
+    		if( is_file( DIR_CONTROLLERS.$this->_controller.EXT_CONTROLLER ) )
+    		{
+
+    			require_once( DIR_CONTROLLERS.$this->_controller.EXT_CONTROLLER );
+    		
+        		// Est-ce que la classe existe ?
+        		if( $rc = new ReflectionClass( $this->_controller.'_controller' ) )
+        		{
+        			
+        			// On instancie la classe appelée
+        			$stdclass = $rc->newInstance();
+
+        			// Est-ce que la méthode appelée existe ?
+        			if( $rc->hasMethod( $this->_action ) )
+        			{
+
+        				// On récupère la liste des paramètres
+        				$rm = $rc->getMethod( $this->_action );
+        				$rp = $rm->getParameters();
+
+        				foreach( $rp as $parameter )
+        				{
+
+        					// Existe-t-il un paramètre passé en GET ou POST correspondant ?
+        					if( empty( $_REQUEST[ $parameter->getName() ] ) && !$parameter->isDefaultValueAvailable() )
+        					{
+        						throw new Exception( utf8_encode('Manque le param&egrave;tre : '.$parameter->getName()),503 );
+        					}
+        					elseif (empty( $_REQUEST[ $parameter->getName() ] ) && $parameter->isDefaultValueAvailable() )
+        					{		
+        						// On alimente le tableau des paramètres
+        						$args[ $parameter->getName() ] = $parameter->getDefaultValue();
+        					}
+        					else
+        					{
+        						// On alimente le tableau des paramètres
+        						$args[ $parameter->getName() ] = $_REQUEST[ $parameter->getName() ];
+        					}
+        					
+        				}
 
 
-        $this->_controller	= !empty( $_GET[NAME_CONTROLLER] )	? $_GET[NAME_CONTROLLER]: DEFAULT_CONTROLLER;
-		$this->_action		= !empty( $_GET[NAME_ACTION] )      ? $_GET[NAME_ACTION]    : DEFAULT_ACTION;
+        				// On appelle la méthode
+        				$rm->invokeArgs( $stdclass , $args );
 
-		//$this->dispatch_route();
-        $this->dispatch();
+        			}
+        			else
+        			{
+        				throw new Exception(utf8_encode('Cette m&eacute;thode n\'existe pas.'),502);
+        			}
 
+        		}
+                else
+                {
+                    throw new Exception( utf8_encode('Cette classe n\'existe pas.'),501);
+                }
+        
+            }
+            else
+            {
+                throw new Exception( utf8_encode("Le fichier ".DIR_CONTROLLERS.$this->_controller.EXT_CONTROLLER." n'existe pas.") , 500);
+            }
+        
+        }
+        catch( Exception $e )
+        {
+            // if exception is an instance of ReflectionException
+            // then error comes from router
+            // so we can explicitly define a status code
+            
+            if( $e instanceof ReflectionException )
+                throw new Exception( utf8_encode("Router error"),400);
+            else
+                throw $e;
 
-		if( is_file( DIR_CONTROLLERS.$this->_controller.EXT_CONTROLLER ) )
-		{
-			require_once( DIR_CONTROLLERS.$this->_controller.EXT_CONTROLLER );
-		}
-		
-		// Est-ce que la classe existe ?
-		if( $rc = new ReflectionClass( $this->_controller.'_controller' ) )
-		{
-			
-			// On instancie la classe appelée
-			$stdclass = $rc->newInstance();
-
-			// Est-ce que la méthode appelée existe ?
-			if( $rc->hasMethod( $this->_action ) )
-			{
-
-				// On récupère la liste des paramètres
-				$rm = $rc->getMethod( $this->_action );
-				$rp = $rm->getParameters();
-
-				foreach( $rp as $parameter )
-				{
-
-					// Existe-t-il un paramètre passé en GET ou POST correspondant ?
-					if( empty( $_REQUEST[ $parameter->getName() ] ) && !$parameter->isDefaultValueAvailable() )
-					{
-						throw new Exception( 'Manque le param&egrave;tre : '.$parameter->getName() );
-					}
-					elseif (empty( $_REQUEST[ $parameter->getName() ] ) && $parameter->isDefaultValueAvailable() )
-					{		
-						// On alimente le tableau des paramètres
-						$args[ $parameter->getName() ] = $parameter->getDefaultValue();
-					}
-					else
-					{
-						// On alimente le tableau des paramètres
-						$args[ $parameter->getName() ] = $_REQUEST[ $parameter->getName() ];
-					}
-					
-				}
-
-
-				// On appelle la méthode
-				$rm->invokeArgs( $stdclass , $args );
-
-			}
-			else
-			{
-				throw new Exception('Cette m&eacute;thode n\'existe pas.');
-			}
-
-		}
+            // debug
+            /*echo "<pre>";
+            var_dump(["ReflectionException?"=>$e instanceof ReflectionException]);
+            var_dump($e);
+            echo "</pre>";*/
+        }
 		
 	}
 

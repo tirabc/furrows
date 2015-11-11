@@ -3,6 +3,8 @@
  * configuration
  */
 
+define( 'DEBUG'         , false );
+
 // Répertoires
 define( 'DIR_ROOT'			, dirname( __FILE__ ).'/' );
 define( 'DIR_APPLICATION'	, DIR_ROOT.'application/' );

@@ -21,6 +21,9 @@ class Controller
         $this->load_helpers();
         // sessions
         session_start();
+
+        if( method_exists( $this , "before" ) )
+            $this->before();
     }
 
     /*
@@ -48,23 +51,6 @@ class Controller
             require_once(DIR_HELPERS.$helper.EXT_HELPER);
 		}
     }
-    
-    /*
-     * load_view($view, $data)
-     */
-    public function load_view($view, $data=null)
-    {
-    	// TODO: check if $data is an array
-		if(isset($data))
-		{
-			foreach($data as $key => $value)
-			{
-				${$key} = $value;
-			}
-		}
-
-		require_once(DIR_VIEWS.$view.EXT_VIEW);
-	}
 	
 }
 ?>

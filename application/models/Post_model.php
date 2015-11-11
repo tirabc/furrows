@@ -3,7 +3,7 @@
 class Post extends Model
 {
 
-    protected $__table = 'posts';
+    protected $__table = 'pposts';
     protected $__name = 'Post';
     protected $id;
     protected $title;

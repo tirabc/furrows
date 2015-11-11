@@ -3,6 +3,12 @@
 class Posts_controller extends Controller
 {
     protected $models = array( 'Post' );
+
+    public function before()
+    {
+        global $loader;
+        $loader->addPath( DIR_VIEWS."posts/" , "posts" );
+    }
   
     public function index()
 	{
@@ -14,10 +20,6 @@ class Posts_controller extends Controller
         $data["posts"] = $posts;
 
         //$error::show( 404 );
-        
-
-        //$view = new Mustache( 'posts/index' , $data );
-		//$view->render();
 
         global $twig;
 

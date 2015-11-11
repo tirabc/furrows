@@ -25,6 +25,13 @@ class Model
 
 		$sql = 'SELECT * FROM ' . $this->__table;
 		$query = $pdo->query ( $sql );
+
+    if( DEBUG ) var_dump($query);
+    if( !$query )
+    {
+      throw new Exception( 'Erreur delete : ' . $sql );
+    }
+
 		$array = $query->fetchAll( PDO::FETCH_CLASS );
 
 		return $array;
@@ -42,6 +49,13 @@ class Model
 		
 		$sql = 'SELECT * FROM ' . $this->__table . ' WHERE id=' . $id;
 		$query = $pdo->query ( $sql );
+
+    if( DEBUG ) var_dump($query);
+    if( !$query )
+    {
+      throw new Exception( 'Erreur delete : ' . $sql );
+    }
+
 		$object = $query->fetchObject ( $this->__name );
 		
 		return $object;
@@ -59,6 +73,13 @@ class Model
 
 		$sql = 'SELECT * FROM ' . $this->__table . ' WHERE ' . $column . '=' . $pdo->quote( $value );
 		$query = $pdo->query ( $sql );
+
+    if( DEBUG ) var_dump($query);
+    if( !$query )
+    {
+      throw new Exception( 'Erreur delete : ' . $sql );
+    }
+
 		$array = $query->fetchAll( PDO::FETCH_CLASS );
 		
 		return $array;
@@ -91,6 +112,8 @@ class Model
 		$sql .= 'VALUES (' . $statement_values . ')';
 
 		$query = $pdo->query ( $sql );
+
+    if( DEBUG ) var_dump($query);
 		
 		if( !$query )
 		{
@@ -121,6 +144,9 @@ class Model
 		
 		$sql = 'UPDATE ' . $this->__table . ' SET ' . $statement . ' WHERE id=' . $this->id;
 		$query = $pdo->query ( $sql );
+
+
+    if( DEBUG ) var_dump($query);
 		
 		if( !$query )
 		{
@@ -141,6 +167,8 @@ class Model
 		
 		$sql = 'DELETE FROM ' . $this->__table . ' WHERE id=' . $this->id;
 		$query = $pdo->query ( $sql );
+
+    if( DEBUG ) var_dump($query);
 		
 		if( !$query )
 		{

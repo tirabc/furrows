@@ -4,19 +4,19 @@ class Pages_controller extends Controller
 {
     protected $models = array( 'Page' );
   
+    public function before()
+    {
+        global $loader;
+        $loader->addPath( DIR_VIEWS."pages/" , "pages" );
+    }
+
     public function index()
     {
-        /*$page_model = new Page();
-        $pages = $page_model->find_by_slug( "index" );
 
-        $data["base_url"] = ARRAY_BASE_PATH;
-        $data["page"] = $page;*/
+        global $twig;
 
-        //$error::show( 404 );
-        
-
-        $view = new Mustache( 'pages/index' , $data );
-        $view->render();
+        $template = $twig->loadTemplate( "@pages/index.html" );
+        echo $template->render($data);
     }
 
 }
