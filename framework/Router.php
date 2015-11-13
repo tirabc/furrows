@@ -91,8 +91,8 @@ class Router
             $stdclass = '';     // Classe appelée
             $args = array();    // Arguments passés
 
-            $this->_controller	= !empty( $_GET[NAME_CONTROLLER] )	? $_GET[NAME_CONTROLLER]: DEFAULT_CONTROLLER;
-    		$this->_action		= !empty( $_GET[NAME_ACTION] )      ? $_GET[NAME_ACTION]    : DEFAULT_ACTION;
+            //$this->_controller	= !empty( $_GET[NAME_CONTROLLER] )	? $_GET[NAME_CONTROLLER]: DEFAULT_CONTROLLER;
+    		//$this->_action		= !empty( $_GET[NAME_ACTION] )      ? $_GET[NAME_ACTION]    : DEFAULT_ACTION;
 
     		if( is_file( DIR_CONTROLLERS.$this->_controller.EXT_CONTROLLER ) )
     		{

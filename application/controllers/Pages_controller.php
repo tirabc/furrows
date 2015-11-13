@@ -16,7 +16,13 @@ class Pages_controller extends Controller
         global $twig;
 
         $template = $twig->loadTemplate( "@pages/index.html" );
-        echo $template->render($data);
+        echo $template->render([]);
+    }
+
+    public function test()
+    {
+
+        echo "test réussi";
     }
 
 }
