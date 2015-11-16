@@ -41,7 +41,7 @@ define( 'PASS'              , 'root' );
 define( 'BASE'              , 'furrowsdemo' );
 
 // Chemin
-define( 'ARRAY_BASE_PATH'   , 'http://localhost:8888/furrows/' );
+define( 'ARRAY_BASE_PATH'   , 'http://localhost/my-works/' );
 
 
 
