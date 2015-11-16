@@ -4,7 +4,7 @@ class Pages_controller extends Controller
 {
     protected $models = array( 'Page' );
   
-    public function before()
+    protected function before()
     {
         global $loader;
         $loader->addPath( DIR_VIEWS."pages/" , "pages" );
@@ -19,9 +19,9 @@ class Pages_controller extends Controller
         echo $template->render([]);
     }
 
-    public function test()
+    public function test( $monargument = '' )
     {
-
+        var_dump($monargument);
         echo "test réussi";
     }
 
