@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Serious Talk - Signup - Welcome</title>
+  <link rel="stylesheet" href="{{base_url}}webroot/css/main.css">
+</head>
+<body id="admin">
+
+  <div id="header" class="units-row end">
+    <div id="logo" class="unit-50">
+      <h1>
+        <a href="#" class="inline-block">
+          <img src="{{base_url}}webroot/img/Logo_SeriousTalk.png"/>
+          &nbsp;
+        </a>
+        <a href="#" class="inline-block" style="position:absolute;top:50%;transform:translateY(-50%);">
+          <span class="serious">serious</span>
+          <span class="talk">talk</span>
+        </a>
+      </h1>
+    </div>
+    <div id="login-wrap" class="unit-push-30 unit-20">
+      {{#user}}
+      <p>
+        <a href="#" data-tools="dropdown" data-target="#login-contextmenu">You're logged as {{username}}</a>
+          <ul id="login-contextmenu" class="dropdown">
+          <li><a href="{{base_url}}users/logout">Logout</a></li>
+        </ul>
+      </p>
+      {{/user}}
+      {{^user}}
+      <a href="{{base_url}}app/index" class="right" style="padding: 10px">Go to homepage</a>
+      {{/user}}
+    </div>
+  </div>
+
+  <div id="content">
+
+    <div class="unit-push-20 unit-60 panelsignup">
+
+      <h2>Register</h2>
+
+      <hr/>
+
+      {{#notification}}
+      <div id="notification">
+        <p class="label label-{{type}} label-outline">{{message}}</p>
+      </div>
+      {{/notification}}
+      
+      <form method="POST" action="signup">
+        <p class="units-row">
+          <label class="unit-40">Username</label>
+          <input class="unit-60" type="text" value="{{values.username}}" name="username">
+        </p>
+        <p class="units-row">
+          <label class="unit-40">Email</label>
+          <input class="unit-60" type="email" value="{{values.email}}" name="email">
+        </p>
+        <p class="units-row">
+          <label class="unit-40">Password</label>
+          <input class="unit-60" type="password" value="" name="password">
+        </p>
+        <hr/>
+        <p class="group">
+          <input class="btn btn-blue right" type="submit" value="Signup" name="usernew">
+          <a href="" class="right" style="padding-top: 2px;padding-right: 10px;">Cancel</a>
+        </p>
+        <input name="callback" type="hidden" value="{{callback}}"/>
+      </form>
+    </div>
+
+  </div>
+
+  <div id="loader" style="display:none;">
+    <p><img src="{{base_url}}webroot/img/spinner.gif" alt="Loading ..."/></p>
+    <p>Loading ...</p>
+  </div>
+
+  <script>
+    window.BASE_URL = "{{base_url}}";
+  </script>
+
+  <!-- loading libraries -->
+  <script src="{{base_url}}webroot/js/libs/jquery-1.11.1.min.js"></script>
+  <script src="{{base_url}}webroot/js/libs/kube.js"></script>
+
+  <script>
+  $(document).ready(function(){
+    if( $("#notification").length > 0 )
+      $("#notification").delay(1500).fadeOut();
+  })
+  </script>
+
+
+</body>
+</html>

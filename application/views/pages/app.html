@@ -1,0 +1,115 @@
+{% include "@common/header.html" %}
+
+<div id="app" role="main">
+</div>
+
+<script src="{{base_url}}webroot/assets/vendors/jquery-1.11.1.min.js"></script>
+<script src="{{base_url}}webroot/assets/vendors/materializecss/bin/materialize.min.js"></script>
+<script src="{{base_url}}webroot/assets/vendors/underscore-min.js"></script>
+<script src="{{base_url}}webroot/assets/vendors/mustache.min.js"></script>
+<script src="{{base_url}}webroot/assets/vendors/backbone-min.js"></script>
+<script src="{{base_url}}webroot/assets/vendors/backbone-deep-model.min.js"></script>
+<script src="{{base_url}}webroot/assets/vendors/rivets.bundled.min.js"></script>
+<script src="{{base_url}}webroot/assets/vendors/rivets-backbone.js"></script>
+<script src="{{base_url}}webroot/assets/vendors/mediator.min.js"></script>
+
+<script src="{{base_url}}webroot/assets/js/rivets.js"></script>
+<script src="{{base_url}}webroot/assets/js/config.js"></script>
+<script src="{{base_url}}webroot/assets/js/models/customer.model.js"></script>
+<script src="{{base_url}}webroot/assets/js/models/project.model.js"></script>
+<script src="{{base_url}}webroot/assets/js/models/company.model.js"></script>
+<script src="{{base_url}}webroot/assets/js/models/story.model.js"></script>
+<script src="{{base_url}}webroot/assets/js/models/iteration.model.js"></script>
+<script src="{{base_url}}webroot/assets/js/models/appstate.model.js"></script>
+<script src="{{base_url}}webroot/assets/js/collections/customers.collection.js"></script>
+<script src="{{base_url}}webroot/assets/js/collections/projects.collection.js"></script>
+<script src="{{base_url}}webroot/assets/js/collections/companies.collection.js"></script>
+<script src="{{base_url}}webroot/assets/js/collections/stories.collection.js"></script>
+<script src="{{base_url}}webroot/assets/js/collections/iterations.collection.js"></script>
+<script src="{{base_url}}webroot/assets/js/views/app.view.js"></script>
+<script src="{{base_url}}webroot/assets/js/views/home.view.js"></script>
+<script src="{{base_url}}webroot/assets/js/views/profile.view.js"></script>
+<script src="{{base_url}}webroot/assets/js/views/projects_list.view.js"></script>
+<script src="{{base_url}}webroot/assets/js/views/projects_details.view.js"></script>
+<script src="{{base_url}}webroot/assets/js/views/projects_new.view.js"></script>
+<script src="{{base_url}}webroot/assets/js/views/backlog.view.js"></script>
+<script src="{{base_url}}webroot/assets/js/views/customers_item.view.js"></script>
+<script src="{{base_url}}webroot/assets/js/views/customers_list.view.js"></script>
+<script src="{{base_url}}webroot/assets/js/views/customers_details.view.js"></script>
+<script src="{{base_url}}webroot/assets/js/views/customers_new.view.js"></script>
+<script src="{{base_url}}webroot/assets/js/router.js"></script>
+<script src="{{base_url}}webroot/assets/js/app.js"></script>
+<script src="{{base_url}}webroot/assets/js/template_manager.js"></script>
+<script src="{{base_url}}webroot/assets/js/mdl_components.js"></script>
+
+<script>
+  var current_user = {{user | json_encode(constant('JSON_PRETTY_PRINT')) | raw }};
+</script>
+
+<script type="text/template" id="tpl-app">
+  <header class="navbar-fixed">
+    <nav class="">
+      <div class="nav-wrapper">
+        <div class="row">
+          <div class="left brand-wrapper">
+            <ul>
+              <li id="brand"><a href="#">Accept</a></li>
+            </ul>
+          </div>
+          <div class="left mainsearch-wrapper">
+            <input id="mainsearch" type="search" placeholder="Chercher ici ...">
+          </div>
+          <ul class="right usermenu-wrapper">
+            <li class="right">
+              <a href="" class="dropdown-menu" data-activates="usermenu"><i class="material-icons left">account_circle</i>&nbsp;{{user.email}}</a>
+              <ul id='usermenu' class='dropdown-content'>
+                <li>
+                  <a href="#profile">
+                    <i class="material-icons left">account_circle</i><span>Votre profil</span>
+                  </a>
+                </li>
+                <li class="divider"></li>
+                <li>
+                  <a href="signout">
+                    <i class="material-icons left">exit_to_app</i><span>Déconnexion</span>
+                  </a>
+                </li>
+              </ul>
+            </li>
+            <li class="right">
+              <a href=""><span class="mybadge" data-badge="3"><i class="material-icons notification">mail</i></span></a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <aside id="sidebar">
+      <div class="collection">
+        <a class="collection-item" rv-each-menu="model:views" rv-href="menu.route" rv-class-active="menu.active">
+          <span class="collection-item-icon"><i class="material-icons">{menu.icon}</i></span>
+          <span class="collection-item-label">{menu.text}</span>
+        </a>
+      </div>
+    </aside>
+    <div id="breadcrumb">
+        <div class="nav-wrapper">
+          <div class="col s12">
+            <a href="#!" class="breadcrumb" rv-each-menu="model:breadcrumb">{menu}</a>
+          </div>
+        </div>
+    </div>
+    <div id="main">
+    </div>
+  </main>
+
+  <footer>
+    @copyright Ligament Apps
+  </footer>
+
+</script>
+
+
+{% include "@common/footer.html" %}

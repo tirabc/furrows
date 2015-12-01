@@ -10,16 +10,16 @@ class User extends Model
     protected $email;
     protected $password;
     protected $register_date;
-        
+
     public function toArray()
     {
         return array(
             "id" => $this->id,
             "email" => $this->email,
-            "password" => $this->password,
+            "name" => $this->name,
         );
     }
-    
+
 }
 
 ?>
