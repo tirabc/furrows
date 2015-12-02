@@ -1,9 +1,9 @@
 <?php
-/* 
+/*
  * configuration
  */
 
-define( 'DEBUG'         , false );
+define( 'DEBUG'         , true );
 
 // Répertoires
 define( 'DIR_ROOT'			, dirname( __FILE__ ).'/' );

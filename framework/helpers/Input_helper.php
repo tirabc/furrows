@@ -30,7 +30,7 @@ class Input
 
     static function escape_mysql( $field )
     {
-        return htmlentities( mysql_real_escape_string( $field ) );
+        return htmlentities( mysqli_real_escape_string( $field ) );
     }
 
     static function hash( $field )
