@@ -37,16 +37,16 @@ try
 	$router->set_pdo( HOST, USER, PASS, BASE );
 	$pdo = $router->get_pdo();
 	$routes = parse_ini_file( './routes.ini' );
-	
+
 	foreach ($routes["routes"] as $key => &$value) {
 
 		$value = explode('-', $value);
 
-		map($value[0], $value[1], function () use ( $value , $router ) {
+		map($value[0], $value[1], function ( $params ) use ( $value , $router ) {
 
 		  $router->_controller = $value[2];
-		  $router->_action = $value[3];		
-		 	
+		  $router->_action = $value[3];
+
 	 		$router->route();
 
 		});
