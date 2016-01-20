@@ -68,13 +68,14 @@ class Router
      */
     public function set_pdo( $host , $user , $pass , $base )
     {
-        // Exception si les parametres n'existent pas
-		if( !( isset( $host ) || isset( $user ) || isset( $pass ) || isset( $base ) ) )
-		{
-			throw new Exception ( 'Echec de chargement des variables de config' );
-		}
-        
-		$this->_pdo = new PDO( "mysql:host=" . $host . ";dbname=" . $base , $user, $pass );
+      // Exception si les parametres n'existent pas
+      if( !( isset( $host ) || isset( $user ) || isset( $pass ) || isset( $base ) ) )
+      {
+        throw new Exception ( 'Echec de chargement des variables de config' );
+      }
+
+      $this->_pdo = new PDO( "mysql:host=" . $host . ";dbname=" . $base , $user, $pass );
+      $this->_pdo->query("SET NAMES 'utf8'");
     }
 
     /*
@@ -91,79 +92,79 @@ class Router
             $stdclass = '';     // Classe appelée
             $args = array();    // Arguments passés
 
-            //$this->_controller	= !empty( $_GET[NAME_CONTROLLER] )	? $_GET[NAME_CONTROLLER]: DEFAULT_CONTROLLER;
-    		//$this->_action		= !empty( $_GET[NAME_ACTION] )      ? $_GET[NAME_ACTION]    : DEFAULT_ACTION;
+            //$this->_controller  = !empty( $_GET[NAME_CONTROLLER] )  ? $_GET[NAME_CONTROLLER]: DEFAULT_CONTROLLER;
+        //$this->_action    = !empty( $_GET[NAME_ACTION] )      ? $_GET[NAME_ACTION]    : DEFAULT_ACTION;
 
-    		if( is_file( DIR_CONTROLLERS.$this->_controller.EXT_CONTROLLER ) )
-    		{
+        if( is_file( DIR_CONTROLLERS.$this->_controller.EXT_CONTROLLER ) )
+        {
 
-    			require_once( DIR_CONTROLLERS.$this->_controller.EXT_CONTROLLER );
-    		
-        		// Est-ce que la classe existe ?
-        		if( $rc = new ReflectionClass( $this->_controller.'_controller' ) )
-        		{
-        			
-        			// On instancie la classe appelée
-        			$stdclass = $rc->newInstance();
+          require_once( DIR_CONTROLLERS.$this->_controller.EXT_CONTROLLER );
 
-        			// Est-ce que la méthode appelée existe ?
-        			if( $rc->hasMethod( $this->_action ) )
-        			{
+            // Est-ce que la classe existe ?
+            if( $rc = new ReflectionClass( $this->_controller.'_controller' ) )
+            {
 
-        				// On récupère la liste des paramètres
-        				$rm = $rc->getMethod( $this->_action );
-        				$rp = $rm->getParameters();
+              // On instancie la classe appelée
+              $stdclass = $rc->newInstance();
 
-        				foreach( $rp as $parameter )
-        				{
+              // Est-ce que la méthode appelée existe ?
+              if( $rc->hasMethod( $this->_action ) )
+              {
 
-        					// Existe-t-il un paramètre passé en GET ou POST correspondant ?
-        					if( empty( $_REQUEST[ $parameter->getName() ] ) && !$parameter->isDefaultValueAvailable() )
-        					{
-        						throw new Exception( utf8_encode('Manque le param&egrave;tre : '.$parameter->getName()),503 );
-        					}
-        					elseif (empty( $_REQUEST[ $parameter->getName() ] ) && $parameter->isDefaultValueAvailable() )
-        					{		
-        						// On alimente le tableau des paramètres
-        						$args[ $parameter->getName() ] = $parameter->getDefaultValue();
-        					}
-        					else
-        					{
-        						// On alimente le tableau des paramètres
-        						$args[ $parameter->getName() ] = $_REQUEST[ $parameter->getName() ];
-        					}
-        					
-        				}
+                // On récupère la liste des paramètres
+                $rm = $rc->getMethod( $this->_action );
+                $rp = $rm->getParameters();
+
+                foreach( $rp as $parameter )
+                {
+
+                  // Existe-t-il un paramètre passé en GET ou POST correspondant ?
+                  if( empty( $_REQUEST[ $parameter->getName() ] ) && !$parameter->isDefaultValueAvailable() )
+                  {
+                    throw new Exception( utf8_encode('Manque le param&egrave;tre : '.$parameter->getName()),503 );
+                  }
+                  elseif (empty( $_REQUEST[ $parameter->getName() ] ) && $parameter->isDefaultValueAvailable() )
+                  {
+                    // On alimente le tableau des paramètres
+                    $args[ $parameter->getName() ] = $parameter->getDefaultValue();
+                  }
+                  else
+                  {
+                    // On alimente le tableau des paramètres
+                    $args[ $parameter->getName() ] = $_REQUEST[ $parameter->getName() ];
+                  }
+
+                }
 
 
-        				// On appelle la méthode
-        				$rm->invokeArgs( $stdclass , $args );
+                // On appelle la méthode
+                $rm->invokeArgs( $stdclass , $args );
 
-        			}
-        			else
-        			{
-        				throw new Exception(utf8_encode('Cette m&eacute;thode n\'existe pas.'),502);
-        			}
+              }
+              else
+              {
+                throw new Exception(utf8_encode('Cette m&eacute;thode n\'existe pas.'),502);
+              }
 
-        		}
+            }
                 else
                 {
                     throw new Exception( utf8_encode('Cette classe n\'existe pas.'),501);
                 }
-        
+
             }
             else
             {
                 throw new Exception( utf8_encode("Le fichier ".DIR_CONTROLLERS.$this->_controller.EXT_CONTROLLER." n'existe pas.") , 500);
             }
-        
+
         }
         catch( Exception $e )
         {
             // if exception is an instance of ReflectionException
             // then error comes from router
             // so we can explicitly define a status code
-            
+
             if( $e instanceof ReflectionException )
                 throw new Exception( utf8_encode("Router error"),400);
             else
@@ -175,8 +176,8 @@ class Router
             var_dump($e);
             echo "</pre>";*/
         }
-		
-	}
+
+  }
 
 }
 ?>
