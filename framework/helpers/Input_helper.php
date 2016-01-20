@@ -18,9 +18,21 @@ class Input
                 return false;
             }
         }
-
         return $array;
+    }
 
+    static function get( $args , $keys )
+    {
+        global $error;
+        $array = array();
+        foreach( $keys as $i => $v )
+        {
+            if( array_key_exists( $v , $args ) )
+            {
+                $array[ $v ] = $args[ $v ];
+            }
+        }
+        return $array;
     }
 
     static function sanitize( $field )

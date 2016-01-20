@@ -3,7 +3,7 @@
  * configuration
  */
 
-define( 'DEBUG'         , true );
+define( 'DEBUG'         , false );
 
 // Répertoires
 define( 'DIR_ROOT'			, dirname( __FILE__ ).'/' );
@@ -37,13 +37,9 @@ define( 'SESSION'           , 'furrowsdemo' );
 define( 'HOST'              , 'localhost' );
 define( 'USER'              , 'root' );
 define( 'PASS'              , 'root' );
-
 define( 'BASE'              , 'furrowsdemo' );
 
 // Chemin
-define( 'ARRAY_BASE_PATH'   , 'http://localhost/my-works/' );
-
-
-
+define( 'ARRAY_BASE_PATH'   , 'http://localhost:8888/furrows/' );
 
 ?>
