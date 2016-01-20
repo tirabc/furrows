@@ -10,7 +10,7 @@ define( 'DIR_ROOT'			, dirname( __FILE__ ).'/' );
 define( 'DIR_APPLICATION'	, DIR_ROOT.'application/' );
 define( 'DIR_FRAMEWORK'		, DIR_ROOT.'framework/' );
 define( 'DIR_WEBROOT'		, DIR_ROOT.'webroot/' );
-define( 'DIR_HELPERS'		, DIR_FRAMEWORK.'helpers/' );
+define( 'DIR_HELPERS'		, DIR_APPLICATION.'helpers/' );
 define( 'DIR_MODELS'		, DIR_APPLICATION.'models/' );
 define( 'DIR_CONTROLLERS'	, DIR_APPLICATION.'controllers/' );
 define( 'DIR_VIEWS'			, DIR_APPLICATION.'views/' );
