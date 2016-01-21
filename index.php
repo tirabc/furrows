@@ -13,8 +13,6 @@ try
 	require_once( DIR_FRAMEWORK.'Router.php' );
 	require_once( DIR_FRAMEWORK.'Controller.php' );
 	require_once( DIR_FRAMEWORK.'Model.php' );
-	require_once( DIR_FRAMEWORK.'View.php' );
-	require_once( DIR_FRAMEWORK.'Json.php' );
 	require_once( DIR_FRAMEWORK.'libs/Twig/Autoloader.php' );
 	require_once( DIR_FRAMEWORK.'libs/Idiorm/idiorm.php' );
 	require DIR_FRAMEWORK . 'libs/Slim/Slim.php';
@@ -58,7 +56,6 @@ try
 			parse($group,$app);
 		}else{
 			$app->group( $key , function () use ($app,$group) {
-
 				parse($group,$app);
 			});
 		}
