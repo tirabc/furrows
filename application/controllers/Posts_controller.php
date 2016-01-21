@@ -21,7 +21,7 @@ class Posts_controller extends Controller
     public function index()
     {
         $post_model = new Post();
-        $posts = $post_model->find_all();
+        $posts = $post_model->findAll( true );
         $data["base_url"] = ARRAY_BASE_PATH;
         $data["posts"] = $posts;
 
@@ -59,6 +59,21 @@ class Posts_controller extends Controller
       echo "</pre>";
     }
 
+    public function new_test($id,$name)
+    {
+      global $router;
+      var_dump($router->_args,$id,$name);
+    }
+
+    public function hello($name)
+    {
+      echo "salut, $name";
+    }
+
+    public function homeapi()
+    {
+      echo "HOME API";
+    }
 }
 
 ?>

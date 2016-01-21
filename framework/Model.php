@@ -26,11 +26,13 @@ class Model
 		 return ORM::for_table($this->__table);
 	 }
 
-  public function findAll()
+  public function findAll( $array = false )
   {
 		$objects = array();
 		$models = $this->getORM()
 		  ->find_many();
+		if( $array )
+			return $models;
 		foreach($models as $model)
 		{
 			$instance = $this->getNewInstance($model->as_array());
@@ -39,29 +41,35 @@ class Model
 		return $objects;
   }
 
-	public function findById($id)
+	public function findById($id , $array = false)
 	{
 		$model = $this->getORM()
 	    ->find_one($id);
+		if( $array )
+			return $model;
 		$instance = $this->getNewInstance($model->as_array());
 		return $instance;
 	}
 
-	public function findOneBy($column,$value)
+	public function findOneBy($column,$value , $array = false )
 	{
 		$model = $this->getORM()
 			->where($column,$value)
 			->find_one();
+		if( $array )
+			return $model;
 		$instance = $this->getNewInstance($model->as_array());
 		return $instance;
 	}
 
-	public function findAllBy($where)
+	public function findAllBy($where , $array = false )
 	{
 		$objects = array();
 		$models = $this->getORM()
 		  ->where($where)
 		  ->find_many();
+		if( $array )
+			return $models;
 		foreach($models as $model)
 		{
 			$instance = $this->getNewInstance($model->as_array());

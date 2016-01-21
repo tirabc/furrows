@@ -119,7 +119,7 @@ class Router
                 $rm = $rc->getMethod( $this->_action );
                 $rp = $rm->getParameters();
 
-                foreach( $rp as $parameter )
+                /*foreach( $rp as $parameter )
                 {
 
                   // Existe-t-il un paramètre passé en GET ou POST correspondant ?
@@ -138,11 +138,12 @@ class Router
                     $args[ $parameter->getName() ] = $_REQUEST[ $parameter->getName() ];
                   }
 
-                }
+                }*/
 
 
                 // On appelle la méthode
-                $rm->invokeArgs( $stdclass , $args );
+                //$rm->invokeArgs( $stdclass , $args );
+                $rm->invokeArgs( $stdclass , $this->_args );
 
               }
               else
