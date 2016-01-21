@@ -9,17 +9,12 @@ class Post extends Model
     protected $title;
     protected $content;
     protected $register_date;
-        
-    public function toArray()
+
+    public function say_hello()
     {
-        return array(
-            "id" => $this->id,
-            "title" => $this->title,
-            "content" => $this->content,
-            "register_date" => $this->register_date
-        );
+      echo "hello";
     }
-    
+
 }
 
 ?>

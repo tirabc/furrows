@@ -74,6 +74,10 @@ class Router
         throw new Exception ( 'Echec de chargement des variables de config' );
       }
 
+      ORM::configure("mysql:host=" . $host . ";dbname=" . $base );
+      ORM::configure('username', $user);
+      ORM::configure('password', $pass);
+
       $this->_pdo = new PDO( "mysql:host=" . $host . ";dbname=" . $base , $user, $pass );
       $this->_pdo->query("SET NAMES 'utf8'");
     }

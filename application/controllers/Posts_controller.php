@@ -50,6 +50,14 @@ class Posts_controller extends Controller
       echo "</pre>";
     }
 
+    public function test()
+    {
+      $post = new Post();
+      $p = $post->find_by_id(1);
+      var_dump($post);
+      $p->say_hello();
+    }
+
 }
 
 ?>

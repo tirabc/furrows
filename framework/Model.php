@@ -43,22 +43,16 @@ class Model
      * @return : User object
      */
 
-	public function find_by_id( $id )
+	public function find_by_id($id)
 	{
 		global $pdo;
 
-		$sql = 'SELECT * FROM ' . $this->__table . ' WHERE id=' . $id;
-		$query = $pdo->query ( $sql );
+		$model = ORM::for_table($this->__table)
+	    ->where_equal('id', $id)
+	    ->find_one();
+		$this->setAttributes($model->as_array());
+		return $this;
 
-    if( DEBUG ) var_dump($query);
-    if( !$query )
-    {
-      throw new Exception( 'Erreur delete : ' . $sql );
-    }
-
-		$object = $query->fetchObject ( $this->__name );
-
-		return $object;
 	}
 
 	/**

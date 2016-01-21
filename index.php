@@ -17,6 +17,7 @@ try
 	require_once( DIR_FRAMEWORK.'Json.php' );
 	require_once( DIR_FRAMEWORK.'libs/Dispatch/Dispatch.php' );
 	require_once( DIR_FRAMEWORK.'libs/Twig/Autoloader.php' );
+	require_once( DIR_FRAMEWORK.'libs/Idiorm/idiorm.php' );
 
 
 	// config
