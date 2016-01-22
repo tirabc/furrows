@@ -91,7 +91,7 @@ class Posts_controller extends Controller
       $data = [
         "postdata" => $params
       ];
-      var_dump($data);
+
       $template = $twig->loadTemplate( "@posts/show_auteur.html" );
       echo $template->render($data);
     }
