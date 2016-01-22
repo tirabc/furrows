@@ -74,6 +74,27 @@ class Posts_controller extends Controller
     {
       echo "HOME API";
     }
+
+    public function traitement_form()
+    {
+      global $app;
+      $params = $app->request->post();
+      $params_json = $app->request->getBody();
+
+      //echo '<pre>';
+      //var_dump($_POST,$_REQUEST,$params,$params_json);
+
+      //$app->response->status(203);
+      //$app->response->body(json_encode($params));
+
+      global $twig;
+      $data = [
+        "postdata" => $params
+      ];
+      var_dump($data);
+      $template = $twig->loadTemplate( "@posts/show_auteur.html" );
+      echo $template->render($data);
+    }
 }
 
 ?>
