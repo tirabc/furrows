@@ -56,11 +56,27 @@ class Model
 		return $instance;
 	}
 
+	// $where Array
 	public function findAllBy($where)
 	{
 		$objects = array();
 		$models = $this->getORM()
 		  ->where($where)
+		  ->find_many();
+		foreach($models as $model)
+		{
+			$instance = $this->getNewInstance($model->as_array());
+			array_push($objects,$instance);
+		}
+		return $objects;
+	}
+
+	// $where_raw String
+	public function findAllByRaw($where_raw)
+	{
+		$objects = array();
+		$models = $this->getORM()
+		  ->where_raw($where_raw)
 		  ->find_many();
 		foreach($models as $model)
 		{
